@@ -10,6 +10,12 @@ const redirect_uris = [
 ];
 
 
+console.log("CLIENT_ID:", CLIENT_ID);
+console.log("CLIENT_SECRET:", CLIENT_SECRET);
+console.log("Redirect URI:", redirect_uris[0]);
+console.log("Scopes:", SCOPES);
+
+
 const oAuth2Client = new google.auth.OAuth2(
  CLIENT_ID,
  CLIENT_SECRET,
