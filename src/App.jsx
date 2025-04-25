@@ -30,7 +30,6 @@ const App = () => {
       details: 'This is the second sample event.',
     },
   ];
-  
 
   return (
     <div>
@@ -43,4 +42,3 @@ const App = () => {
 };
 
 export default App;
-
