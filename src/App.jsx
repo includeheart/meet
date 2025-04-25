@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import CitySearch from './components/CitySearch';
+import EventList from './components/EventList';
+import Event from './components/Event';
+import NumberOfEvents from './components/NumberOfEvents';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const sampleEvent = {
+    summary: 'Sample Event',
+    created: '2025-04-25T15:00:00Z',
+    location: 'Sample location',
+    details: 'This is a sample event description.',
+  };
+
+  const locations = ['New York', 'Berlin', 'London'];
+
+  const events = [
+    {
+      id: 'e1',
+      summary: 'Sample Event 1',
+      created: '2025-04-25T15:00:00Z',
+      location: 'Sample Location 1',
+      details: 'This is the first sample event.',
+    },
+    {
+      id: 'e2',
+      summary: 'Sample Event 2',
+      created: '2025-04-26T15:00:00Z',
+      location: 'Sample Location 2',
+      details: 'This is the second sample event.',
+    },
+  ];
+  
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <Event event={sampleEvent} id="event" />
+      <CitySearch id="city-search" allLocations={locations} />
+      <EventList id="event-list" events={events} />
+      <NumberOfEvents id="number-of-events" />
+    </div>
+  );
+};
 
-export default App
+export default App;
+
