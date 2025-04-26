@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const NumberOfEvents = ({ onChange }) => {
   const [value, setValue] = useState(32);
@@ -20,6 +21,9 @@ const NumberOfEvents = ({ onChange }) => {
       />
     </div>
   );
+};
+NumberOfEvents.propTypes = {
+  onChange: PropTypes.func,
 };
 
 export default NumberOfEvents;
