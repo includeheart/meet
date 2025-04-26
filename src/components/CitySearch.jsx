@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const CitySearch = ({ allLocations }) => {
+const CitySearch = ({ allLocations, setCurrentCity }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -20,8 +20,13 @@ const CitySearch = ({ allLocations }) => {
   const handleItemClicked = (event) => {
     const value = event.target.textContent;
     setQuery(value);
-    setShowSuggestions(false); // to hide the list
+    setShowSuggestions(false);
+    setCurrentCity(value); // Call setCurrentCity to update the selected city
   };
+
+  useEffect(() => {
+    setSuggestions(allLocations);
+  }, [allLocations]);
 
   return (
     <div id="city-search">
@@ -33,22 +38,25 @@ const CitySearch = ({ allLocations }) => {
         onFocus={() => setShowSuggestions(true)}
         onChange={handleInputChanged}
       />
-      {showSuggestions ?
+      {showSuggestions ? (
         <ul className="suggestions">
-          {suggestions.map((suggestion) => {
-            return <li onClick={handleItemClicked} key={suggestion}>{suggestion}</li>
-          })}
-          <li key='See all cities' onClick={handleItemClicked}>
+          {suggestions.map((suggestion) => (
+            <li onClick={handleItemClicked} key={suggestion}>
+              {suggestion}
+            </li>
+          ))}
+          <li key="See all cities" onClick={handleItemClicked}>
             <b>See all cities</b>
           </li>
         </ul>
-        : null
-      }
+      ) : null}
     </div>
-  )
+  );
 };
+
 CitySearch.propTypes = {
   allLocations: PropTypes.array.isRequired,
+  setCurrentCity: PropTypes.func.isRequired, // Ensure setCurrentCity is passed as a prop
 };
 
 export default CitySearch;
