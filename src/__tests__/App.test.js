@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, within } from '@testing-library/react';
+import { render, within, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom'; 
 import 'jest';
 import userEvent from '@testing-library/user-event';
@@ -47,6 +47,41 @@ describe('<App /> integration', () => {
     expect(allRenderedEventItems.length).toBe(berlinEvents.length);
     allRenderedEventItems.forEach(event => {
       expect(event.textContent).toContain("Berlin, Germany");
+    });
+  });
+});
+
+describe('Integration tests between App, NumberOfEvents, and EventList', () => {
+  test('renders the correct number of events based on user input in NumberOfEvents', async () => {
+    const user = userEvent.setup();
+    const AppComponent = render(<App />);
+    const AppDOM = AppComponent.container.firstChild;
+
+    // Locate the NumberOfEvents input
+    const NumberOfEventsDOM = AppDOM.querySelector('#number-of-events');
+    const numberInput = within(NumberOfEventsDOM).getByRole('textbox');
+
+    // Change the input value to 10
+    await user.clear(numberInput);
+    await user.type(numberInput, '10');
+
+    // Wait for the EventList to update
+    const EventListDOM = AppDOM.querySelector('#event-list');
+    await waitFor(() => {
+      const EventListItems = within(EventListDOM).queryAllByRole('listitem');
+      expect(EventListItems.length).toBe(10);
+    });
+  });
+
+  test('renders the default number of events (32) when the app is loaded', async () => {
+    const AppComponent = render(<App />);
+    const AppDOM = AppComponent.container.firstChild;
+
+    // Wait for the EventList to load
+    const EventListDOM = AppDOM.querySelector('#event-list');
+    await waitFor(() => {
+      const EventListItems = within(EventListDOM).queryAllByRole('listitem');
+      expect(EventListItems.length).toBe(32);
     });
   });
 });
