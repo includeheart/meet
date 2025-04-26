@@ -19,9 +19,10 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
 
   const handleItemClicked = (event) => {
     const value = event.target.textContent;
+    console.log("Selected city:", value); // Debugging log
     setQuery(value);
     setShowSuggestions(false);
-    setCurrentCity(value); // Call setCurrentCity to update the selected city
+    setCurrentCity(value);
   };
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
 
 CitySearch.propTypes = {
   allLocations: PropTypes.array.isRequired,
-  setCurrentCity: PropTypes.func.isRequired, // Ensure setCurrentCity is passed as a prop
+  setCurrentCity: PropTypes.func.isRequired,
 };
 
 export default CitySearch;
