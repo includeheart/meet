@@ -6,15 +6,15 @@ const Event = ({ event }) => {
   const toggleDetails = () => setIsExpanded(prev => !prev);
 
   return (
-    <li>
+    <li className = "event">
       <h3>{event.summary}</h3>
       <p>{new Date(event.created).toLocaleString('en-US', { timeZone: 'UTC' })}</p>
       <p>{event.location}</p>
-      {!isExpanded && <button onClick={toggleDetails}>Show Details</button>}
+      {!isExpanded && <button className="details-btn" onClick={toggleDetails}>Show Details</button>}
       {isExpanded && (
         <>
-          <p>{event.details}</p>
-          <button onClick={toggleDetails}>Hide Details</button>
+          <p className="details">{event.details}</p>
+          <button className="details-btn" onClick={toggleDetails}>Hide Details</button>
         </>
       )}
     </li>
