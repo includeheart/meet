@@ -2,6 +2,9 @@
 .App {
   text-align: center;
   padding: 2% 5%;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
 }
 
 .App * {
@@ -85,4 +88,12 @@ input[type="number"] {
   border-radius: 4px;
   outline: none;
   cursor: pointer;
+}
+
+.alerts-container {
+  position: fixed;
+  top: 0px;
+  left: 20px;
+  width: 250px;
+  z-index: 1000;
 }
