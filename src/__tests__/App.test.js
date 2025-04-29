@@ -56,16 +56,10 @@ describe('Integration tests between App, NumberOfEvents, and EventList', () => {
     const user = userEvent.setup();
     const AppComponent = render(<App />);
     const AppDOM = AppComponent.container.firstChild;
-
-    // Locate the NumberOfEvents input
     const NumberOfEventsDOM = AppDOM.querySelector('#number-of-events');
     const numberInput = within(NumberOfEventsDOM).getByRole('textbox');
-
-    // Change the input value to 10
     await user.clear(numberInput);
     await user.type(numberInput, '10');
-
-    // Wait for the EventList to update
     const EventListDOM = AppDOM.querySelector('#event-list');
     await waitFor(() => {
       const EventListItems = within(EventListDOM).queryAllByRole('listitem');
@@ -76,8 +70,6 @@ describe('Integration tests between App, NumberOfEvents, and EventList', () => {
   test('renders the default number of events (32) when the app is loaded', async () => {
     const AppComponent = render(<App />);
     const AppDOM = AppComponent.container.firstChild;
-
-    // Wait for the EventList to load
     const EventListDOM = AppDOM.querySelector('#event-list');
     await waitFor(() => {
       const EventListItems = within(EventListDOM).queryAllByRole('listitem');

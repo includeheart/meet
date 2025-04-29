@@ -1,5 +1,7 @@
+/* eslint-env jest */
 import React from 'react';
 import { render, within } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
 import App from '../App';
@@ -8,7 +10,11 @@ import { extractLocations, getEvents } from '../api';
 describe('<CitySearch /> component', () => {
   let CitySearchComponent;
   beforeEach(() => {
-    CitySearchComponent = render(<CitySearch allLocations={[]}/>);
+    CitySearchComponent = render(<CitySearch
+      allLocations={[]}
+      setCurrentCity={() => { }}
+      setInfoAlert={() => { }}
+    />);
   });
   test('renders text input', () => {
     const cityTextBox = CitySearchComponent.queryByRole('textbox');
@@ -34,15 +40,14 @@ describe('<CitySearch /> component', () => {
     const user = userEvent.setup();
     const allEvents = await getEvents();
     const allLocations = extractLocations(allEvents);
-    CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
-    // user types "Berlin" in city textbox
+    CitySearchComponent.rerender(<CitySearch 
+      allLocations={allLocations}
+      setInfoAlert={() => { }} />);
     const cityTextBox = CitySearchComponent.queryByRole('textbox');
     await user.type(cityTextBox, "Berlin");
-    // filter allLocations to locations matching "Berlin"
     const suggestions = allLocations? allLocations.filter((location) => {
       return location.toUpperCase().indexOf(cityTextBox.value.toUpperCase()) > -1;
     }): [];
-    // get all <li> elements inside the suggestion list
     const suggestionListItems = CitySearchComponent.queryAllByRole('listitem');
     expect(suggestionListItems).toHaveLength(suggestions.length + 1);
     for (let i = 0; i < suggestions.length; i += 1) {
@@ -57,7 +62,7 @@ describe('<CitySearch /> component', () => {
     CitySearchComponent.rerender(<CitySearch
       allLocations={allLocations}
       setCurrentCity={() => { }}
-    />);
+      setInfoAlert={() => { }} />);
     const cityTextBox = CitySearchComponent.queryByRole('textbox');
     await user.type(cityTextBox, "Berlin");
     const BerlinGermanySuggestion = CitySearchComponent.queryAllByRole('listitem')[0];
