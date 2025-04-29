@@ -6,12 +6,12 @@ import NumberOfEvents from '../components/NumberOfEvents';
 
 describe('<NumberOfEvents /> component', () => {
   test('renders an input with textbox role', () => {
-    const { getByRole } = render(<NumberOfEvents />);
+    const { getByRole } = render(<NumberOfEvents setErrorAlert={() => { }} />);
     expect(getByRole('textbox')).toBeInTheDocument();
   });
 
   test('default input value is 32', () => {
-    const { getByRole } = render(<NumberOfEvents />);
+    const { getByRole } = render(<NumberOfEvents setErrorAlert={() => { }} />);
     const input = getByRole('textbox');
     expect(input).toHaveValue(32);
   });

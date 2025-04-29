@@ -1,4 +1,6 @@
+import React from 'react';
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Alert extends Component {
   constructor(props) {
@@ -47,5 +49,8 @@ class ErrorAlert extends Alert {
     this.bgColor = 'rgb(255, 220, 220)';
   }
 }
+Alert.propTypes = {
+  text: PropTypes.string.isRequired,
+};
 
 export { Alert, InfoAlert, ErrorAlert };
