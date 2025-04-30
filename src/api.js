@@ -31,33 +31,20 @@ import mockData from './mock-data';
      NProgress.done();
      return events?JSON.parse(events):[];
    }
-
-   if (!navigator.onLine) {
-      const events = localStorage.getItem("lastEvents");
-      NProgress.done();
-      return events?JSON.parse(events) : [];
-   }
  
    const token = await getAccessToken();
    if (token) {
      const url = `https://tcb2tom6b3.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
      const response = await fetch(url);
      const result = await response.json();
-     if (result.events) {
+     if (result) {
+       NProgress.done();
+       localStorage.setItem("lastEvents", JSON.stringify(result.events));
        return result.events;
-     }
+     } else return null;
    }
-   
-   const url = `https://tcb2tom6b3.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
-   const response = await fetch(url);
-   const result = await response.json();
-   if (result) {
-     NProgress.done();
-     localStorage.setItem("lastEvents", JSON.stringify(result.events));
-     return result.events;
-   } else return null;
- };
- 
+  }
+
  export const fetchEvents = async () => {
    const token = await getAccessToken();
    const removeQuery = () => {
