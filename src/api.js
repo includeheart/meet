@@ -45,8 +45,9 @@ export const getEvents = async () => {
       'https://tcb2tom6b3.execute-api.eu-central-1.amazonaws.com/dev/api/get-events'
     );
     const result = await response.json();
+    console.log("API response:", result); // Log the full API response
     if (result) {
-      console.log("Fetched events:", result.events); // Debugging: Log fetched events
+      console.log("Fetched events:", result.events); // Log the events specifically
       NProgress.done();
       localStorage.setItem("lastEvents", JSON.stringify(result.events));
       return result.events;
