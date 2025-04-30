@@ -24,7 +24,7 @@ export default defineConfig({
             "purpose": "any"
             },
             {
-            "src": "/meet-app-192.png",
+            "src": "meet-app-192.png",
             "type": "image/png",
             "sizes": "192x192",
             "purpose": "maskable"
@@ -36,7 +36,7 @@ export default defineConfig({
             "purpose": "maskable"
             }
         ],
-        "start_url": "/",
+        "start_url": ".",
         "display": "standalone",
         "theme_color": "#000000",
         "background_color": "#ffffff"
