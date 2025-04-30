@@ -29,24 +29,38 @@ export const getEvents = async () => {
   const token = await getAccessToken();
   if (token) {
     const url = `https://tcb2tom6b3.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
-    const response = await fetch(url);
-    const result = await response.json();
-    if (result.events) {
-      return result.events;
+    try {
+      const response = await fetch(url);
+      const result = await response.json();
+      if (result.events) {
+        return result.events;
+      }
+    } catch (error) {
+      console.error("Error fetching events with token:", error);
     }
   }
 
-  const response = await fetch(
-    'https://tcb2tom6b3.execute-api.eu-central-1.amazonaws.com/dev/api/get-events'
-  );
-  const result = await response.json();
-  if (result) {
-    NProgress.done();
-    localStorage.setItem("lastEvents", JSON.stringify(result.events));
-    return result.events;
+  try {
+    const response = await fetch(
+      'https://tcb2tom6b3.execute-api.eu-central-1.amazonaws.com/dev/api/get-events'
+    );
+    const result = await response.json();
+    if (result) {
+      NProgress.done();
+      localStorage.setItem("lastEvents", JSON.stringify(result.events));
+      return result.events;
+    }
+  } catch (error) {
+    console.error("Error fetching events without token:", error);
   }
 
-  return [];
+  // Fallback to localStorage if offline or fetch fails
+  const savedEvents = localStorage.getItem("lastEvents");
+  if (savedEvents) {
+    return JSON.parse(savedEvents);
+  }
+
+  return []; // Return an empty array if no events are available
 };
 
 export const fetchEvents = async () => {
