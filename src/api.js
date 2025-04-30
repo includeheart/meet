@@ -47,7 +47,8 @@ import mockData from './mock-data';
        return result.events;
      }
    }
- 
+   
+   const url = `https://tcb2tom6b3.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
    const response = await fetch(url);
    const result = await response.json();
    if (result) {
