@@ -46,6 +46,7 @@ export const getEvents = async () => {
     );
     const result = await response.json();
     if (result) {
+      console.log("Fetched events:", result.events); // Debugging: Log fetched events
       NProgress.done();
       localStorage.setItem("lastEvents", JSON.stringify(result.events));
       return result.events;
