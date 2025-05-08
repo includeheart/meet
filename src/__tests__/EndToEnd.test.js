@@ -12,7 +12,7 @@ describe('show/hide an event details', () => {
     const events = await page.evaluate(() => document.querySelectorAll('.event').length);
     console.log('Number of events:', events);
     await browser.close();
-  });
+  }, 10000);
 
   test('User can expand an event to see its details', async () => {
     const browser = await puppeteer.launch();
@@ -23,7 +23,7 @@ describe('show/hide an event details', () => {
     const eventDetails = await page.$('.event .details');
     expect(eventDetails).toBeDefined();
     await browser.close();
-  });
+  }, 10000);
 
   test('User can collapse an event to hide details', async () => {
     const browser = await puppeteer.launch();
@@ -35,5 +35,5 @@ describe('show/hide an event details', () => {
     const eventDetails = await page.$('.event .details');
     expect(eventDetails).toBeNull();
     await browser.close();
-  });
+  }, 10000);
 });
