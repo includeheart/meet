@@ -5,7 +5,7 @@ import NumberOfEvents from './components/NumberOfEvents';
 import { useEffect, useState } from 'react';
 import { extractLocations, getEvents } from './api';
 import './App.css';
-import { InfoAlert, ErrorAlert } from './components/Alert';
+import { InfoAlert, ErrorAlert, OfflineAlert } from './components/Alert';
 
 const App = () => {
   const [allLocations, setAllLocations] = useState([]);
@@ -14,27 +14,47 @@ const App = () => {
   const [currentCity, setCurrentCity] = useState("See all cities");
   const [infoAlert, setInfoAlert] = useState("");
   const [errorAlert, setErrorAlert] = useState("");
+  const [offlineAlert, setOfflineAlert] = useState("");
 
- useEffect(() => {
-   fetchData();
- }, []);
+  useEffect(() => {
+    const handleOffline = () => setOfflineAlert("You are currently offline.");
+    const handleOnline = () => setOfflineAlert("");
 
- const fetchData = async () => {
-  const allEvents = await getEvents();
-  const filteredEvents = currentCity === "See all cities" ?
-    allEvents :
-    allEvents.filter(event => event.location === currentCity)
-  setEvents(filteredEvents.slice(0, currentNOE));
-  setAllLocations(extractLocations(allEvents));
- }
+    window.addEventListener("offline", handleOffline);
+    window.addEventListener("online", handleOnline);
 
- useEffect(() => {
+    // Check initial online status
+    if (!navigator.onLine) {
+      setOfflineAlert("You are currently offline.");
+    }
+
+    return () => {
+      window.removeEventListener("offline", handleOffline);
+      window.removeEventListener("online", handleOnline);
+    };
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const allEvents = await getEvents();
+    const filteredEvents = currentCity === "See all cities" ?
+      allEvents :
+      allEvents.filter(event => event.location === currentCity);
+    setEvents(filteredEvents.slice(0, currentNOE));
+    setAllLocations(extractLocations(allEvents));
+  };
+
+  useEffect(() => {
     fetchData();
   }, [currentCity, currentNOE]);
 
   return (
     <div className="App">
       <div className="alerts-container">
+        {offlineAlert.length ? <OfflineAlert text={offlineAlert} /> : null}
         {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
         {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
       </div>
@@ -46,6 +66,6 @@ const App = () => {
       <EventList events={events} />
     </div>
   );
-}
+};
 
 export default App;

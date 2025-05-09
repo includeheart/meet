@@ -49,8 +49,17 @@ class ErrorAlert extends Alert {
     this.bgColor = 'rgb(255, 220, 220)';
   }
 }
+
+class OfflineAlert extends Alert {
+  constructor(props) {
+    super(props);
+    this.color = 'rgb(255, 165, 0)'; // Orange color
+    this.bgColor = 'rgb(255, 245, 220)'; // Light orange background
+  }
+}
+
 Alert.propTypes = {
   text: PropTypes.string.isRequired,
 };
 
-export { Alert, InfoAlert, ErrorAlert };
+export { Alert, InfoAlert, ErrorAlert, OfflineAlert };
