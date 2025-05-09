@@ -23,7 +23,6 @@ const App = () => {
     window.addEventListener("offline", handleOffline);
     window.addEventListener("online", handleOnline);
 
-    // Check initial online status
     if (!navigator.onLine) {
       setOfflineAlert("You are currently offline.");
     }

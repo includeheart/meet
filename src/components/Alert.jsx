@@ -53,8 +53,8 @@ class ErrorAlert extends Alert {
 class OfflineAlert extends Alert {
   constructor(props) {
     super(props);
-    this.color = 'rgb(255, 165, 0)'; // Orange color
-    this.bgColor = 'rgb(255, 245, 220)'; // Light orange background
+    this.color = 'rgb(255, 165, 0)';
+    this.bgColor = 'rgb(255, 245, 220)';
   }
 }
 
