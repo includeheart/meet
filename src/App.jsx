@@ -64,7 +64,9 @@ const App = () => {
         setCurrentCity={setCurrentCity}
         setInfoAlert={setInfoAlert} />
       <NumberOfEvents onChange={setCurrentNOE} setErrorAlert={setErrorAlert} />
-      <CityEventsChart allLocations={allLocations} events={events} />
+      <div style={{ width: "99%" }}>
+        <CityEventsChart allLocations={allLocations} events={events} />
+      </div>
       <EventList events={events} />
     </div>
   );
