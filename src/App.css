@@ -99,6 +99,13 @@ input[type="number"] {
 }
 
 .chart-container {
-  width: 99%;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.App .chart-container {
+  align-self: stretch;
 }
