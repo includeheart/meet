@@ -97,17 +97,3 @@ input[type="number"] {
   width: 250px;
   z-index: 1000;
 }
-
-.chart-container {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  display: block;
-  flex-shrink: 0;
-  flex-grow: 1;
-}
-
-.App .chart-container {
-  align-self: stretch;
-}
